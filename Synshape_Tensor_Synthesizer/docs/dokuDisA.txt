@@ -1,0 +1,65 @@
+TENSOR — DISASSEMBLIERUNG, WASM UND SCHUTZ VOR VERÖFFENTLICHUNG
+================================================================
+
+Kurzfassung
+------------
+WebAssembly ist kein Geheimtresor. Ein Browser muss ein Modul herunterladen, um es ausführen zu können. Deshalb kann ein entschlossener Dritter ein ausgeliefertes WASM-Modul speichern, disassemblieren oder sein Verhalten analysieren. WASM erhöht bei optimiertem, symbolarmem Code den Analyseaufwand gegenüber gut lesbarem JavaScript; es verhindert Reverse Engineering aber nicht.[1]
+
+Die richtige Frage ist deshalb nicht: „Wie verstecke ich alles?“
+Sondern: „Welche Logik darf sichtbar sein, welche darf nur schwer kopierbar sein und welche darf niemals auf dem Client liegen?“
+
+Ampelmodell für Tensor
+----------------------
+
+GRÜN — sinnvoll für WASM
+* Deterministische Tensor-Rechenhilfen: Mittelwerte, boolesches Compose, Normalisierung.
+* Shape-Prüfung, Wertzählung, kleine Heatmap-Kennzahlen.
+* ONNX-Header- und Feldhilfen, sofern diese als lokale Funktion bleiben sollen.
+* Nicht geheime Parser, Hashing ohne Sicherheitsversprechen und Visualisierungshelfer.
+* Rechenpfade, die bei vielen Matrixwerten spürbar schneller werden.
+
+GELB — nur mit bewusstem Kompromiss
+* Proprietäre Heuristiken. WASM kann die oberflächliche Lesbarkeit reduzieren, schützt die Idee aber nicht vollständig.
+* Lokale Lizenzkomfortprüfungen. Sie dürfen höchstens ein UX-Signal sein; sie sind keine Autorisierung.
+* Erkennungslogik für nicht sensible Inhalte. Jede Client-Prüfung kann verändert werden.
+
+ROT — nie in WASM oder JavaScript
+* API-Schlüssel, OAuth-Client-Secrets, private Signaturschlüssel und Zugangstokens.
+* Server-Autorisierung, Zahlungsstatus, Rechteverwaltung und Rate-Limits.
+* Geschäftsgeheimnisse, deren Offenlegung wirtschaftlich kritisch wäre.
+* Eine „unbrechbare“ Anti-Kopierlogik. Sie wäre vom Client manipulierbar.
+
+Empfohlene Schutzschichten
+--------------------------
+1. **Architekturgrenze:** Alles wirklich Geheime oder Autoritative serverseitig halten. Der Browser darf Anfrage und Ergebnis sehen, nicht aber Signaturschlüssel oder Entscheidungslogik.
+2. **Minimale WASM-Oberfläche:** Nur wenige, sachlich benannte Exporte bereitstellen. Keine Debug-Exports, keine Entwicklungshelfer, keine eingebetteten Testdaten.
+3. **Release-Build:** Optimieren, Debug-Informationen entfernen, unnötige Namen vermeiden und die Binärgröße beobachten. Das ist Härtung gegen beiläufiges Lesen, kein kryptografischer Schutz.
+4. **Web-Schutz:** HTTPS, Content-Security-Policy, Subresource Integrity für fremde Skripte, Abhängigkeitsprüfung und serverseitige Validierung für spätere Onlinefunktionen.
+5. **Recht und Betrieb:** Lizenz, Urheberhinweis, klare Markenführung, Release-Prozess und Sicherheitsmeldungsweg wirken oft stärker gegen unfaire Kopien als Client-Obfuskation allein.
+
+Warum Verschlüsselung keine vollständige Lösung ist
+---------------------------------------------------
+Ein verschlüsseltes Modul muss im Browser wieder entschlüsselt werden. Der Schlüssel oder der entschlüsselte Inhalt ist daher zur Laufzeit erreichbar. Verschlüsselung kann einen zusätzlichen Hürdenmoment schaffen, erhöht aber Komplexität, Fehlerfläche und Ladeaufwand. Sie sollte nicht als zentrale Schutzstrategie eingeplant werden.
+
+Vorschlag für Tensor 1.x
+------------------------
+* Belasse UI, Copy, Navigation, Lernkarten und lokale Speicherlogik in TypeScript.
+* Verschiebe später lediglich `compose_f32`, `compose_bool_or`, `validate_shape` und eine kleine Hashfunktion in ein WASM-Modul.
+* Halte ONNX-Export und Import zunächst in gut testbarem TypeScript. Erst bei nachgewiesenem Performance- oder IP-Bedarf lohnt sich eine kontrollierte Auslagerung einzelner Funktionen.
+* Nutze die Vorlagen in `wasm-core/rust` oder `wasm-core/zig` als lokalen Startpunkt. Sie erzeugen keinen Schutzzauber, sondern eine klare, kleine und überprüfbare Modulgrenze.
+
+Checkliste vor Veröffentlichung
+-------------------------------
+[ ] Keine Geheimnisse im Frontend, in WASM, im Git-Verlauf oder in Quellkarten.
+[ ] Alle serverseitigen Entscheidungen serverseitig prüfen.
+[ ] Release-Build ohne Debug-Symbole und nur mit notwendigen Exporten erzeugen.
+[ ] Importdateien größenbegrenzt und fehlertolerant behandeln.
+[ ] Datenschutzhinweis für lokale Browserdaten und Downloads erstellen.
+[ ] Externe Abhängigkeiten regelmäßig aktualisieren und prüfen.
+[ ] Rechtliche Nutzungsbedingungen und Lizenz für den eigenen Code festlegen.
+
+Quellen
+-------
+[1] MDN — WebAssembly: https://developer.mozilla.org/en-US/docs/WebAssembly
+[2] wasm-bindgen Guide: https://rustwasm.github.io/docs/wasm-bindgen/
+[3] Zig Language Reference — WebAssembly: https://ziglang.org/documentation/master/

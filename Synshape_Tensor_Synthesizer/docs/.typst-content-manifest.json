@@ -1,0 +1,15 @@
+{
+  "task_kind": "new-document",
+  "output": "pdf",
+  "signals": [],
+  "hard_constraints": [
+    "German technical operating manual",
+    "structured report",
+    "local web application"
+  ],
+  "content_features": {
+    "code_blocks": 3,
+    "defined_terms": 16,
+    "portrait_images": 0
+  }
+}

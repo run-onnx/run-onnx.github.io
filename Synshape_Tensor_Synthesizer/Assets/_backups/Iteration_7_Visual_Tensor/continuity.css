@@ -1,0 +1,134 @@
+/* Signal Cartography continuity contract: Synshape is the dominant instrument identity; cyan calibrates, lime executes or validates. */
+.brand-lockup {
+  gap: 12px;
+  min-width: 312px;
+}
+.brand-mark {
+  width: 43px;
+  height: 43px;
+  filter: drop-shadow(0 0 14px rgba(200, 255, 90, 0.26));
+}
+.brand-lockup h1 {
+  font-size: 16px;
+  letter-spacing: 0.12em;
+}
+.topbar-actions .instrument-button {
+  border-radius: 2px !important;
+  color: #a9cdd0 !important;
+  border-color: rgba(117, 229, 239, 0.21) !important;
+  background: rgba(5, 22, 29, 0.34) !important;
+  box-shadow: inset 2px 0 0 rgba(117, 229, 239, 0.22);
+}
+.topbar-actions .instrument-button:hover {
+  color: #e3f6f7 !important;
+  border-color: rgba(117, 229, 239, 0.52) !important;
+  background: rgba(117, 229, 239, 0.065) !important;
+}
+.topbar-actions .onnxjs-export {
+  color: #75e5ef !important;
+}
+.spatial-stage::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 8% 6%;
+  pointer-events: none;
+  opacity: 0.72;
+  background:
+    radial-gradient(
+      circle at 66% 47%,
+      transparent 0 20%,
+      rgba(117, 229, 239, 0.115) 20.15% 20.34%,
+      transparent 20.5% 35%,
+      rgba(117, 229, 239, 0.07) 35.2% 35.36%,
+      transparent 35.55% 51%,
+      rgba(200, 255, 90, 0.065) 51.2% 51.36%,
+      transparent 51.55%
+    ),
+    repeating-conic-gradient(
+      from 14deg at 66% 47%,
+      rgba(117, 229, 239, 0.13) 0deg 0.45deg,
+      transparent 0.45deg 15deg
+    );
+  mask-image: radial-gradient(circle at 66% 47%, #000 0 46%, transparent 72%);
+}
+.spatial-stage .graph-canvas {
+  z-index: 2;
+}
+.spatial-stage .stage-hint,
+.spatial-stage .stage-fullscreen,
+.spatial-stage .stage-axis,
+.spatial-stage .first-graph-guide {
+  z-index: 4;
+}
+.reticle-a {
+  border-color: rgba(117, 229, 239, 0.23);
+  box-shadow:
+    inset 0 0 70px rgba(117, 229, 239, 0.06),
+    0 0 0 68px rgba(117, 229, 239, 0.018);
+}
+.reticle-b {
+  border-color: rgba(117, 229, 239, 0.16);
+}
+.readout {
+  border-radius: 2px;
+  background: rgba(8, 25, 31, 0.34);
+}
+.readout.validator.valid {
+  color: #c8ff5a;
+  border-color: rgba(200, 255, 90, 0.3);
+}
+.shape-control:not(.active),
+.tool-button:not(.active),
+.operator-control {
+  border-radius: 2px;
+}
+.first-graph-guide {
+  border-left-color: rgba(117, 229, 239, 0.9);
+  background: linear-gradient(
+    90deg,
+    rgba(5, 19, 25, 0.92),
+    rgba(5, 19, 25, 0.42)
+  );
+}
+@media (max-width: 720px) {
+  .brand-lockup {
+    min-width: 0;
+    gap: 8px;
+  }
+  .brand-mark {
+    width: 34px;
+    height: 34px;
+  }
+  .brand-lockup h1 {
+    font-size: 13px;
+    letter-spacing: 0.1em;
+  }
+  .topbar-actions .instrument-button {
+    display: none !important;
+  }
+  .first-graph-guide {
+    top: 10px !important;
+    bottom: auto !important;
+    width: 220px !important;
+    padding: 6px 8px !important;
+  }
+  .first-graph-guide h2 {
+    margin: 3px 0 5px !important;
+    font-size: 12px !important;
+  }
+  .first-graph-guide ol {
+    gap: 2px !important;
+  }
+  .first-graph-guide li,
+  .first-graph-guide li b {
+    font-size: 6px !important;
+  }
+  .guide-actions {
+    margin-top: 5px !important;
+  }
+  .guide-actions button {
+    padding: 4px 5px !important;
+    font-size: 7px !important;
+  }
+}

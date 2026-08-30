@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "pdf": "/home/ubuntu/tensor/docs/typst-betrieb/main.pdf",
+  "mode": "standard",
+  "page_count": 5,
+  "selected_pages": [1, 2, 3, 4, 5],
+  "rendered_pages": [
+    "/home/ubuntu/tensor/docs/typst-betrieb/review/pages/page-0001.png",
+    "/home/ubuntu/tensor/docs/typst-betrieb/review/pages/page-0002.png",
+    "/home/ubuntu/tensor/docs/typst-betrieb/review/pages/page-0003.png",
+    "/home/ubuntu/tensor/docs/typst-betrieb/review/pages/page-0004.png",
+    "/home/ubuntu/tensor/docs/typst-betrieb/review/pages/page-0005.png"
+  ],
+  "contact_sheets": [
+    "/home/ubuntu/tensor/docs/typst-betrieb/review/sheets/sheet-01.jpg"
+  ],
+  "settings": {
+    "dpi": 110,
+    "columns": 3,
+    "max_sheet_pages": 12,
+    "thumbnail_width": 320
+  }
+}

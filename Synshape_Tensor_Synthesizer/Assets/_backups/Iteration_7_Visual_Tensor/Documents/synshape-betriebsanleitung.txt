@@ -1,0 +1,217 @@
+SYNSHAPE
+Vollständige Betriebsanleitung
+Stand: Version 0.6
+
+„Draw a surface. Resolve the graph.“
+
+1. WOFÜR SYNSHAPE DA IST
+
+Synshape ist ein lokales Arbeitsinstrument, mit dem Sie Tensoren und ONNX-Graphen räumlich entwerfen, prüfen und ausführen können. Sie zeichnen mit Maus, Touch oder Stift im zentralen Feld. Aus Ihrer Geste entstehen Tensor-Knoten. Mit Verbindungen machen Sie aus diesen Knoten einen gerichteten Rechengraphen.
+
+Sie brauchen dafür keinen Account, keinen Server und keine Programmierumgebung. Die Arbeit findet in Ihrem Browser statt. Die Anwendung kann ONNX-Dateien erzeugen, einen unterstützten ONNX-Teilumfang wieder einlesen und Modelle direkt aus dem Speicher lokal prüfen beziehungsweise ausführen.
+
+Diese Anleitung erklärt die normalen Arbeitsabläufe zuerst. Die erweiterten Funktionen kommen später und sind klar als optional markiert.
+
+2. DIE WICHTIGSTEN BEGRIFFE – GANZ EINFACH
+
+Ein Tensor ist hier einfach ein Datencontainer mit einer Form. Ein Bild kann zum Beispiel als [1, Höhe, Breite] beschrieben werden. Ein Knoten ist die sichtbare Karte eines solchen Tensors. Eine Route ist die Verbindung zwischen zwei Knoten. Eine Operation beschreibt, wie Werte auf dieser Route verarbeitet werden, etwa MatMul oder Relu.
+
+Ein Graph ist die Gesamtheit aller Knoten und Routen. Synshape führt den Graphen als gerichteten azyklischen Graphen. Das bedeutet: Daten dürfen vorwärts fließen, aber eine Route darf nicht wieder zu ihrem eigenen Ursprung zurückführen. Dadurch bleibt der Graph exportier- und überprüfbar.
+
+3. ERSTER START
+
+Beim Öffnen sehen Sie zuerst eine kurze Synshape-Intro-Sequenz. Sie können sie abwarten oder „Skip intro“ wählen. Danach erscheint der Arbeitsbereich mit drei Zonen:
+
+• Links: Werkzeuge zum Erzeugen und Verbinden von Tensoren.
+• Mitte: Das räumliche Tensorfeld. Hier zeichnen Sie und sehen den Graphen.
+• Rechts: Inspektor, Validierung, Ausführung, Trace und lokale Presets.
+
+Für einen ersten Graphen reichen drei Schritte:
+
+1. Wählen Sie links einen Zeichenmodus, zum Beispiel „2D surface“.
+2. Klicken und ziehen Sie im mittleren Feld, um einen neuen Tensor zu erzeugen.
+3. Wählen Sie „Route“ und ziehen Sie von einem Knoten zu einem anderen.
+
+Wenn eine Route mathematisch plausibel ist, wird sie in Tensor Lime als gültig gezeigt. Eine ungültige Route erscheint in Koralle und blockiert den ONNX-Export, bis Sie sie korrigieren oder entfernen.
+
+4. TENSOREN ZEICHNEN
+
+Der Zeichenmodus bestimmt, wie Synshape Ihre Geste in eine Tensorform übersetzt. Die Anwendung berücksichtigt dabei unter anderem X/Y-Position, Druck, Geschwindigkeit, Länge und Anzahl der Gesteproben.
+
+1D line
+Eine Linie erzeugt einen Vektor-artigen Tensor, etwa [batch, length]. Dieser Modus eignet sich für Gewichtungen, Reihen und kompakte Signale.
+
+2D surface
+Eine Fläche erzeugt eine Form wie [batch, height, width]. Für den Einstieg ist dies meist der beste Modus.
+
+3D volume
+Ein Volumen nutzt zusätzlich eine Tiefenabschätzung und erzeugt zum Beispiel [batch, depth, height, width].
+
+nD projection
+In diesem Modus geben Sie die Form selbst ein. Schreiben Sie Dimensionen mit „x“ getrennt, zum Beispiel:
+
+2 x 24 x 32 x 16 x 64
+
+Alle Dimensionen müssen positive ganze Zahlen sein. Nach dem Anwenden übernimmt der ausgewählte Knoten diese Form.
+
+micro-RAG
+Dieser Modus erzeugt einen Kontextknoten. Er wird visuell als MICRO-RAG / CONTEXT gekennzeichnet und kann wie ein Tensor in den Graphen eingebunden werden.
+
+5. KNOTEN BEWEGEN, AUSWÄHLEN UND LÖSCHEN
+
+Wählen Sie „Select“. Ein Klick auf einen Knoten zeigt ihn im rechten Inspektor. Dort sehen Sie Name, Rang, Datentyp, deklarierte Form und die letzten Geste-Messwerte. Ziehen Sie einen selektierten Knoten, um seine Position im Feld zu ändern. Diese Position ist eine visuelle Anordnung; sie ändert nicht die mathematische Reihenfolge des Graphen.
+
+Mit „Remove selected node“ löschen Sie den aktuell gewählten Knoten. Routen, die zu diesem Knoten gehören, verschwinden ebenfalls. „Clear graph“ leert den gesamten aktuellen Graphen. Nutzen Sie „Reset demo“, um den integrierten Referenzgraphen zurückzuholen.
+
+6. ROUTEN UND OPERATOREN
+
+Wählen Sie „Route“. Ziehen Sie anschließend von einem Ausgangspunkt zu einem Zielknoten. Synshape schlägt abhängig von den Formen eine Operation vor und prüft sie sofort.
+
+Add
+Add addiert Werte elementweise. Die Formen müssen identisch oder broadcast-kompatibel sein.
+
+MatMul
+MatMul ist eine Matrixmultiplikation. Die innere Dimension der linken Form muss zur äußeren Dimension der rechten Form passen.
+
+Concat
+Concat hängt Werte entlang der letzten Achse zusammen. Die übrigen Achsen müssen zusammenpassen.
+
+Relu
+Relu setzt negative Werte auf null. Die Ausgabeform bleibt gleich.
+
+Conv
+Conv steht für eine Faltungsroute. Der aktuelle Editor hält die Route als Standard-ONNX-Operation fest; vor einer produktiven Ausführung müssen Eingabe- und Kernel-Layout tatsächlich zueinander passen.
+
+Wenn Sie im Select-Modus direkt auf das Label einer Route klicken, öffnet sich eine Operator-Karte im Feld. Sie erklärt die Regel, die Formbedingung und die Bedeutung der Operation an genau dieser Stelle.
+
+7. GRAPH SUCHEN
+
+Oben rechts im mittleren Feld befindet sich die Suchleiste „Find node, operator, shape…“. Sie sucht lokal nach:
+
+• Knotennamen und internen Knoten-IDs
+• Tensorformen
+• Knotenart und Zeichenquelle
+• Operatoren und ihren Quell-/Zielnamen
+• Namen und Formen von Initialisierern
+
+Geben Sie einen Begriff ein, etwa „MatMul“, „rag“, „32“ oder einen Knotennamen. Die erste Übereinstimmung wird im Feld cyan markiert. Sie können mit Pfeil hoch und Pfeil runter durch die Ergebnisse gehen, mit Enter ein Ergebnis fokussieren und mit Escape die Suche leeren. Ein Operator-Treffer öffnet zusätzlich seine Operator-Karte.
+
+8. VALIDIERUNG UND EXPORT
+
+Der Status „GRAPH VALID“ bedeutet, dass Synshape derzeit keine ungültige Route erkennt. Erst dann sollten Sie exportieren.
+
+Export ONNX
+Die Schaltfläche „Export ONNX“ erzeugt eine lokale .onnx-Datei. Sie wird direkt im Browser als Download bereitgestellt.
+
+ONNX + notes
+Diese Funktion erzeugt zwei Dateien: eine Standard-ONNX-Datei und eine zusätzliche Synshape-Manifestdatei. Die Manifestdatei enthält sichtbare Namen, Positionen, Routen und Anmerkungen aus dem Editor. Sie gehört nicht zum ONNX-Standard, ist aber praktisch für browsernahe Weiterarbeit und spätere Rehydration.
+
+Import ONNX
+Mit „Import ONNX“ können Sie eine lokale ONNX-Datei laden. Synshape stellt den unterstützten Teilumfang wieder als Knoten, Routen und Initialisierer dar. Nicht unterstützte Operatoren werden nicht stillschweigend umgedeutet; die Anwendung zeigt ihre Grenze an.
+
+9. INITIALISIERER
+
+Initialisierer sind feste Float32-Werte, zum Beispiel Gewichtsmatrizen. Sie können sie als Synshape-JSON importieren oder exportieren. Beim Import prüft Synshape, ob die Wertanzahl zur angegebenen Form passt.
+
+Beispiel eines einzelnen Initialisierers:
+
+{
+  "name": "kernel-weight__basis",
+  "shape": [32, 64],
+  "values": [0.01, -0.03]
+}
+
+10. LOKALE AUSFÜHRUNG UND LIVE-TELEMETRIE
+
+„Execute buffer“ versucht, den aktuellen ONNX-Graphen direkt aus dem Speicher auszuführen. Wenn WebNN in Ihrem Browser verfügbar ist, wird diese lokale Beschleunigung bevorzugt. Andernfalls verwendet Synshape die WebAssembly-Ausführung als lokalen Fallback. Der Browser zeigt Provider, Dauer und eine kleine Ausgabevorschau an.
+
+„Arm live stream“ verbindet die aktuelle Pointer-Telemetrie mit kompatiblen Live-Eingängen. Jeder Ausführungsschritt verwendet einen Float32-Vektor aus X, Y, Druck und Geschwindigkeit. Zeichnen Sie dann im Feld. Die „Stream Timeline“ protokolliert bis zu 48 erfolgreiche lokale Skalare als Cyan-Kurve.
+
+Wichtig: Die Timeline ist ein Arbeitsreadout. Sie ist kein Beweis für Modellqualität, Genauigkeit oder Vergleichbarkeit zwischen verschiedenen Geräten.
+
+„Capture trace“ erstellt einen Ausführungstrace. Synshape legt dafür die verfügbaren Zwischenwerte lokal als temporäre Ausgaben offen. Mit dem Regler können Sie Frame für Frame die Form und die ersten Werte ansehen.
+
+11. PRESETS UND VERSCHLÜSSELTER AUSTAUSCH
+
+„Save preset“ speichert den aktuellen Graphen unter einem Namen in diesem Browser. Die Preset-Bibliothek rechts kann diese gespeicherten Graphen laden oder löschen.
+
+Für einen geschützten Austausch verwenden Sie „Export library“. Synshape fragt nach einer Passphrase mit mindestens zwölf Zeichen. Daraus wird im Browser ein Schlüssel abgeleitet. Die Bibliothek wird als verschlüsseltes JSON-Paket heruntergeladen.
+
+„Import library“ fordert dieselbe Passphrase an. Bei korrekter Passphrase wird die Bibliothek nach einer Formatprüfung in diesem Browser gespeichert. Ein Import ersetzt die aktuelle lokale Bibliothek.
+
+Wichtig: Die Verschlüsselung schützt das Paket im gespeicherten oder übertragenen Zustand. Sobald ein Empfänger es in seinem Browser entschlüsselt, kann dieser Empfänger den Inhalt grundsätzlich lesen. Synshape verspricht keine Unmöglichkeit des Reverse Engineerings im Browser.
+
+12. MATHEMATIKMODULE UND CUSTOM WASM
+
+Die Module Kahan Σ, Feynman Δ und Max-Born P sind lokale Synshape-Module. Sie arbeiten mit der Live-Telemetrie und sind ausdrücklich keine portablen ONNX-Standardoperatoren.
+
+Sie können außerdem ein lokales WASM-Modul anhängen, wenn es die Funktion
+
+synshape_transform(x, y, pressure, velocity)
+
+bereitstellt. Das Modul läuft als Synshape-Seitenmodul im Browser. Es wird nicht als allgemeiner ONNX-Custom-Operator exportiert.
+
+13. VOLLBILD, ABOUT UND MOBILGERÄTE
+
+„Focus field“ sowie das Vollbildsymbol im Header schalten das räumliche Feld in den Browser-Vollbildmodus. Mit Esc verlassen Sie ihn wieder.
+
+Das Info-Symbol im Header öffnet About. Dort stehen Produktidentität, lokale Architektur, Datenschutzgrenzen und der Credit „Micha | g.dev/avx“.
+
+Auf Mobilgeräten bleiben Zeichenmodi, Suche, Graphfeld und Export zugänglich. Kompakte Nebenflächen werden zugunsten des Feldes reduziert. Für präzises Verbinden und große Graphen empfiehlt sich dennoch ein Desktop oder Tablet.
+
+14. TASTATURKURZBEFEHLE
+
+In der Graphsuche:
+
+• Pfeil runter: nächstes Suchergebnis
+• Pfeil hoch: vorheriges Suchergebnis
+• Enter: aktives Ergebnis im Graphen fokussieren
+• Escape: Suchtext löschen
+
+Im Browser-Vollbild:
+
+• Escape: Vollbild verlassen
+
+15. HÄUFIGE PROBLEME
+
+„Export is blocked“
+Mindestens eine Route ist ungültig. Prüfen Sie den roten Konflikthinweis im Validator und ändern oder löschen Sie die betreffende Verbindung.
+
+„Local execution failed“
+Der Graph kann zwar sichtbar sein, aber für die Laufzeit fehlen kompatible Eingaben, Operatorattribute oder ein unterstützter Ausführungsweg. Lesen Sie die lokale Fehlermeldung; sie verlässt den Browser nicht.
+
+„WebNN is unavailable“
+Das ist kein Defekt. Synshape versucht automatisch die lokale WASM-Ausführung, wenn WebNN nicht vorhanden oder nicht kompatibel ist.
+
+„Encrypted library import rejected“
+Prüfen Sie die Passphrase und stellen Sie sicher, dass die Datei aus einem Synshape-Bibliotheksexport stammt. Eine falsche Passphrase oder ein manipuliertes Paket wird abgewiesen.
+
+„Die Suche findet nichts“
+Die Suche durchsucht den aktuellen Graphen, nicht Dateien auf Ihrem Computer. Probieren Sie Teile eines Knotennamens, „MatMul“, „rag“ oder einzelne Formdimensionen wie „32“.
+
+16. SICHERHEIT, DATENSCHUTZ UND GRENZEN
+
+Synshape ist für lokale Browserarbeit ausgelegt. Graph, Geste, Trace, Presets und Ausführung werden nicht an einen Synshape-Server gesendet. Eine exportierte Datei oder ein lokal importiertes Browserprojekt unterliegt aber weiterhin der Kontrolle der Person, die diesen Browser und diese Datei besitzt.
+
+Verschlüsselung schützt ein Paket auf dem Weg oder im Ruhezustand. Sie macht Code oder entschlüsselte Daten nicht dauerhaft unsichtbar vor einem Nutzer, der sie in seinem eigenen Browser ausführen kann.
+
+17. EMPFOHLENER STANDARDABLAUF
+
+1. Zeichnen Sie zwei bis drei Tensoren.
+2. Verbinden Sie sie und prüfen Sie „GRAPH VALID“.
+3. Öffnen Sie bei Unsicherheit die Operator-Karte über das Routenlabel.
+4. Speichern Sie den Graphen als benanntes Preset.
+5. Führen Sie „Execute buffer“ aus, wenn Ihr Graph kompatibel ist.
+6. Nutzen Sie Capture trace oder Arm live stream für lokale Beobachtung.
+7. Exportieren Sie ONNX oder ONNX + notes.
+8. Exportieren Sie bei Bedarf die Preset-Bibliothek verschlüsselt.
+
+18. WEITERFÜHRENDE TECHNISCHE QUELLEN
+
+Die offizielle ONNX-Dokumentation erklärt das Modellformat und die Operatorwelt. ONNX Runtime Web dokumentiert die lokale Browserausführung und die verfügbaren Provider.
+
+[1] ONNX: https://onnx.ai/
+[2] ONNX Runtime Web: https://onnxruntime.ai/docs/get-started/with-javascript/web.html
+[3] ONNX Runtime WebNN: https://onnxruntime.ai/docs/tutorials/web/ep-webnn.html
+
+Ende der Betriebsanleitung.

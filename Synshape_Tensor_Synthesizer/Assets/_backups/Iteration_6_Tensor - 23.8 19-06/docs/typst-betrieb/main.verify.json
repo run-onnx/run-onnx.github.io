@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "pdf": "/home/ubuntu/tensor/docs/typst-betrieb/main.pdf",
+  "profile": "text-document",
+  "overall": "PASS",
+  "checks": [
+    {
+      "name": "signature",
+      "status": "PASS",
+      "message": "PDF header is valid",
+      "evidence": {
+        "header": "%PDF-"
+      }
+    },
+    {
+      "name": "pdfinfo",
+      "status": "PASS",
+      "message": "PDF is parseable by pdfinfo",
+      "evidence": {}
+    },
+    {
+      "name": "page-count",
+      "status": "PASS",
+      "message": "pages=5",
+      "evidence": {
+        "pages": 5
+      }
+    },
+    {
+      "name": "text-presence",
+      "status": "PASS",
+      "message": "characters=7813",
+      "evidence": {}
+    },
+    {
+      "name": "placeholders",
+      "status": "PASS",
+      "message": "No placeholder markers found",
+      "evidence": {
+        "matches": []
+      }
+    },
+    {
+      "name": "fonts",
+      "status": "PASS",
+      "message": "font_records=4",
+      "evidence": {}
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+TENSOR — PRODUKTÜBERSICHT
+==========================
+
+1. Was ist Tensor?
+------------------
+Tensor ist ein lokales Browser-Studio, das Tensoren nicht als trockene Zahlenwand, sondern als gestaltbare Struktur erfahrbar macht. Ein Nutzer wählt Material (Datentyp), Form (Shape), Werte, eine Operation und optionales Wissen für den Codex. Daraus entsteht ein exportierbares ONNX-Objekt.
+
+Tensor ist kein Ersatz für PyTorch, ein Trainingscluster oder eine MLOps-Plattform. Tensor ist die verständliche Schicht davor: ein Ort, an dem Menschen begreifen, was ein Tensor ist, wie Werte eine Matrix bilden und wie ein kleiner ONNX-Graph aussieht.
+
+2. Welcher Nutzen entsteht?
+---------------------------
+Tensor senkt die Schwelle zwischen Idee und technischem Objekt. Der Nutzer kann einen kleinen Tensor mit eigener Form und eigenen Werten erzeugen, seine Wirkung als Heatmap sehen, eine verständliche Graphroute betrachten und die Struktur als ONNX exportieren. Das schafft ein direktes Lernfeedback, ohne dass zunächst eine Entwicklungsumgebung, Python-Pakete oder Fachbegriffe beherrscht werden müssen.
+
+Der Codex verknüpft eine technische Struktur mit einer erklärenden Notiz, einem JSON-Fragment oder einem SVG. So wird ein Modell nicht nur als Datei, sondern als nachvollziehbares kleines Wissensobjekt transportierbar.
+
+3. Unique Selling Proposition
+-----------------------------
+Tensor verbindet vier Dinge in einem lokalen, berührbaren Ablauf: **Tensorform**, **echte Werte**, **ONNX-Struktur** und **verständliche Lernsprache**. Die wichtige Besonderheit ist nicht ein einzelner Operator, sondern die Übersetzung: Aus „Shape, DType, Node und Metadata“ werden Material, Form, Impuls, Codex und Flow.
+
+Die Leinen in der Flow Lens sind dafür ein Sinnbild. Jede Leine zeigt eine Verbindung zwischen Input, Operation und Output. Sie ist keine Simulation eines neuronalen Netzes im physikalischen Sinn. Sie macht eine ansonsten abstrakte Kante im Graphen als lesbare, reaktive Spur sichtbar. Maus, Touch und — nach ausdrücklicher Freigabe — Gerätesensorik können diese Darstellung leicht bewegen.
+
+4. Für wen eignet sich Tensor?
+------------------------------
+* Für Lernende, Lehrende und Workshops, die einen ersten Zugang zu Tensoren und ONNX suchen.
+* Für Kinder und Jugendliche mit Begleitung, die ein kleines technisches Objekt bauen statt nur eine Erklärung lesen möchten.
+* Für Designer, Produktmenschen und Prototyper, die Form, Werte und Metadaten eines kleinen Modellartefakts diskutieren wollen.
+* Für Entwickler, die eine schnelle, lokale Skizze oder eine anschauliche Lernkarte zu einer ONNX-Route benötigen.
+
+5. Vergleich und Abgrenzung
+---------------------------
+Netron ist vor allem ein breit unterstützter Viewer für bestehende ML-Modelle. ONNX Runtime Web ist eine Bibliothek zum Ausführen von ONNX-Modellen im Browser. Teachable Machine hilft beim codefreien Erstellen einfacher Modelle. Tensor setzt früher an: Es ist ein lokales Studio für das verständliche Gestalten, Beschreiben und Exportieren kleiner Tensorstrukturen.
+
+| Werkzeug | Primärer Zweck | Unterschied zu Tensor |
+|---|---|---|
+| Netron | Vorhandene Modelle inspizieren | Tensor baut und erklärt kleine Strukturen statt nur zu betrachten. |
+| ONNX Runtime Web | Modelle im Web ausführen | Tensor fokussiert auf Lernen, Form und Export, nicht auf Inferenzleistung. |
+| Teachable Machine | Einfache Modelle ohne Code trainieren | Tensor arbeitet näher an Tensorwerten, ONNX-Struktur und Metadaten. |
+
+6. Responsiv, Touch, Laden und Speichern
+----------------------------------------
+Tensor ist responsiv aufgebaut. Auf großen Bildschirmen stehen Arbeitsfläche und Live-Tensor nebeneinander; auf schmalen Bildschirmen ordnen sie sich vertikal. Der Flow kann mit der Maus, Touch-Gesten oder Pfeiltasten bedient werden. Die Gerätesensorik ist optional und erfordert eine bewusste Freigabe.
+
+ONNX-Dateien werden lokal eingelesen. Ein unterstütztes Modell kann in die Oberfläche übernommen werden. ONNX-Exporte und Lernkarten werden als Download gespeichert. Der Beispielspeicher arbeitet bewusst lokal im Browser. Ohne Server kann ein Nutzer speichern, laden, kategorisieren, filtern und wieder löschen; ein Wechsel des Geräts oder das Löschen von Browserdaten nimmt diesen lokalen Speicher nicht mit.
+
+7. Was kann der Nutzer einstellen?
+----------------------------------
+* `float32`, `int32` oder `bool`
+* Shape von Skalar bis maximal sechs Dimensionen und 16.384 Werten
+* Direkte Werte als Folge oder Matrix-Grid mit Heatmap
+* Seed und Amplitude für ein reproduzierbares Signal
+* Passende ONNX-Operationen, zum Beispiel `Relu`, `Tanh`, `Sigmoid`, `Neg` und `Not`
+* Codex-Fragmente aus Text, JSON oder SVG
+* Kategorie und Name gespeicherter Mini-Modelle
+* Compose mit einem passenden zweiten Szenenmodell
+
+8. Empfohlener Plan vor einer Veröffentlichung
+----------------------------------------------
+1. Prüfe die Nutzerführung mit kleinen echten Lerninterviews: Können Personen ohne ONNX-Vorwissen ein 4×4-Modell bauen und erklären?
+2. Ergänze automatisierte Tests für Import, Export, Speichern, Kategorien und Compose.
+3. Lege einen klaren Datenschutzhinweis an: Was bleibt lokal, was wird heruntergeladen, was wird nicht hochgeladen?
+4. Halte Geheimnisse aus dem Browser. WebAssembly kann den Aufwand für Analyse erhöhen, aber nicht verhindern, dass ausgelieferter Code untersucht wird.
+5. Nutze für einen späteren WASM-Kern ausschließlich deterministiche, nicht geheime Algorithmen. Entferne Debug-Symbole, minimiere Exporte und halte eine serverseitige Grenze für alles, was wirklich vertraulich oder autoritativ ist.
+
+Quellen:
+[1] https://developer.mozilla.org/en-US/docs/WebAssembly
+[2] https://netron.app/
+[3] https://onnxruntime.ai/docs/tutorials/web/
+[4] https://teachablemachine.withgoogle.com/

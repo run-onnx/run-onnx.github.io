@@ -1,0 +1,18 @@
+Synshape Tensor Synthesizer
+
+FRAGE: Was ist der "Synshape Tensor Synthesizer"?
+
+ANTWORT:
+Es ist ein vollstaendig lokales, browserbasiertes Lern- und Gestaltungsstudio fuer neuronale Netze (ONNX-Tensoren). Es folgt strikt dem O(1) Dogma und dem Feynman-Prinzip: Komplexe Machine-Learning-Konzepte werden so weit reduziert und greifbar gemacht, dass man sie ohne Programmierkenntnisse wie Legosteine zusammenklicken und visuell manipulieren kann.
+
+KERNFUNKTIONEN:
+1. Material & Form: Du bestimmst den Grundstoff (Float32/Plasma, Int32/Voxel, Boolean/Pulse) und die Dimension (Skalar, Vektor, Matrix) deines Tensors.
+2. Heatmap-Labor: Die Werte und Gewichte der Matrix koennen live ueber ein visuelles Raster (Grid) bearbeitet und geprueft werden.
+3. Impulse (Operationen): Du wendest grundlegende ONNX-Aktivierungsfunktionen (wie Relu, Tanh, Sigmoid) an, um den Signalfluss zu formen.
+4. Compose-System: Zwei Tensoren koennen mathematisch verschmolzen werden (z.B. Werte mitteln oder logisch verknuepfen).
+5. Nativer Export: Das fertige Mini-Gehirn kann direkt aus dem Browser als funktionsfaehige .onnx-Datei oder als .svg-Lernkarte (Flow Lens) exportiert werden.
+
+ARCHITEKTUR:
+- Zero-Backend: Keine 10 GB schweren Python-Pakete (PyTorch, TensorFlow). Keine Cloud-GPUs.
+- 100% Lokal: Das Studio arbeitet komplett isoliert im Browser. Tensoren und Mini-Modelle werden direkt im lokalen Speicher (localStorage) gehalten.
+- Zukunftssicher: Die grundlegende Matrix-Mathematik ist darauf vorbereitet, kuenftig ueber deterministisches WebAssembly (Rust/Zig) rasend schnell berechnet zu werden.

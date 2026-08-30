@@ -1,0 +1,10 @@
+﻿{
+  "entry": "main.typ",
+  "metadata": {
+    "author": "tensor AI",
+    "subtitle": "Tensor â€” Interactive ONNX Studio",
+    "title": "Technische Betriebsanleitung"
+  },
+  "mode": "report",
+  "theme": "report-theme.typ"
+}
