@@ -83,7 +83,7 @@ import {
   VolumeX,
 
   X,
-
+  Maximize
 } from "lucide-react";
 
 
@@ -5576,6 +5576,19 @@ export default function Home() {
 
                 <span>Zurück</span>
 
+              </button>
+              <button
+                onClick={() => {
+                  if (!document.fullscreenElement) {
+                    document.documentElement.requestFullscreen().catch(() => {});
+                  } else {
+                    document.exitFullscreen().catch(() => {});
+                  }
+                }}
+                title="Fullscreen"
+                style={{ marginLeft: "8px", padding: "0 12px", display: "flex", alignItems: "center", justifyContent: "center", background: "rgba(255, 255, 255, 0.5)", border: "1px solid rgba(0, 0, 0, 0.1)", borderRadius: "10px", cursor: "pointer", height: "42px", color: "var(--text-primary)", transition: "all 0.2s" }}
+              >
+                <Maximize size={16} />
               </button>
 
               <span className="navigation-hint">

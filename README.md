@@ -1,6 +1,6 @@
 ﻿<div align="center">
-  <img src="https://micha1a.github.io/tensor-storage/tensor-mark_63462173.png" alt="Synshape Tensor Synthesizer Logo" width="120" height="120" style="border-radius: 20px; margin-bottom: 20px;" />
-  <h1>Synshape Tensor Synthesizer</h1>
+  <img src="./tensor-storage/tensor-mark_63462173.png" alt="Synshape Tensor Synthesizer Logo" width="120" height="120" style="border-radius: 20px; margin-bottom: 20px;" />
+  <h1><a href="https://run-onnx.github.io">Synshape Tensor Synthesizer</a></h1>
   <p><strong>A Bionic, Zero-Backend ONNX Studio for Extreme Edge-Performance.</strong></p>
   <p><i>Created by <a href="https://micha1a.github.io">Michael Barlozewski</a></i></p>
 </div>
